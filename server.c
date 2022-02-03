@@ -27,13 +27,16 @@ int main()
     }
 
     server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = inet_addr("INSERT SERVER IP ADDRESS");
+    server_address.sin_addr.s_addr = inet_addr("192.168.0.99");
     server_address.sin_port = htons(50005);
 
     bind(sock, (struct sockaddr *)&server_address, sizeof(server_address));
+    puts("Binding OK");
     listen(sock, 5);
+    puts("Listening ...");
     client_length = sizeof(client_address);
     client_socket = accept(sock, (struct sockaddr *)&client_address, &client_length);
+    puts("Connection accepted!");
 
     while (true)
     {

