@@ -11,9 +11,10 @@ Keylogger malware for penetration testing in Windows platforms.
 5. Navigate through different directories
 6. Implement keylogger to backdoor
 
-## Compiling
+## Compiling backdoor
 
-Compiling for windows:
+### Install mingw
+
 `sudo apt-get install mingw-w64`
 
 ### Win32
@@ -23,3 +24,7 @@ Compiling for windows:
 ### Win64
 
 `x86_64-w64-mingw32-gcc -o backdoor_win64.exe backdoor.c`
+
+## Compiling server
+
+`gcc server.c -o server.o`
