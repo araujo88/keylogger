@@ -59,6 +59,11 @@ int main()
         {
             goto jump;
         }
+        else if (strncmp("persist", buffer, 7) == 0)
+        {
+            recv(client_socket, response, sizeof(response), 0);
+            printf("%s", response);
+        }
         else
         {
             recv(client_socket, response, sizeof(response), MSG_WAITALL); // receives message from client
