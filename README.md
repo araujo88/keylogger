@@ -1,6 +1,6 @@
 # keylogger
 
-Keylogger malware for penetration testing in Windows platforms. PLEASE USE WITH RESPONSABILITY. I AM NOT RESPONSABLE FOR MISUSE OF THIS SOFTWARE FOR ILLEGAL PURPOUSES.
+Keylogger malware for penetration testing in Windows platforms. PLEASE USE WITH RESPONSABILITY. I AM NOT RESPONSABLE FOR MISUSE OF THIS SOFTWARE FOR ILLEGAL PURPOSES.
 
 ## Steps
 
