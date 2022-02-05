@@ -28,3 +28,15 @@ Keylogger malware for penetration testing in Windows platforms. PLEASE USE WITH 
 ## Compiling server
 
 `gcc server.c -o server.o`
+
+## Usage
+
+Replace in both `server.c` and `backdoor.c` files the server IP address (the attacker) "xxx.xxx.x.xx" with the actual IP address, which can be retrieved using `ifconfig`.
+
+After compiling, run `backdoor_win32.exe` or `backdoor_win64.exe` in the target machine, preferably Windows 7. On a Linux machine, preferably Kali Linux, run `server.o`.
+
+### Commands
+
+`keylog_start` - starts keylogger in target machine <br>
+`persist` - creates persistence in target machine registry <br>
+`q` - quit <br>
